@@ -2,6 +2,10 @@
 
 webpack 学习笔记，跟着官网的收藏学习一遍。记录其中的重点和有疑问的地方。
 
+- “古老”的标签 `<script>`，`<link>` 加载方式
+- 模块化按需请求，定量加载 CommonJS, AMD, CMD, UMD, ES6 模块
+- 静态分析，依赖关系，不同类型的代码交给不同的加载器进行处理
+
 ## 概念
 *webpack* 是一个现代 JavaScript 应用程序的*静态模块打包器(module bundler)*。当 webpack 处理应用程序时，它会递归地构建一个*依赖关系图(dependency graph)*，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 *bundle*。
 
