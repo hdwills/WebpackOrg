@@ -150,3 +150,50 @@ const config = {
     ```
     
     这部分代码中可以看到有 3 个独立分离的依赖图。详细的解释暂不做分析，只有实际使用过之后才能更好的理解。
+    
+### 输出
+
+配置 `output` 选项可以控制 webpack 如何向硬盘写入编译文件。注意，即使可以存在多个**入口**起点，但是指指定一个**输出**配置。
+
+- 用法
+
+    在 webpack 中配置 `output` 属性的最低要求是，将它的指设置为一个对象，其中包括如下：
+    - `filename` 用于输出文件的文件名
+    - 目标输出目录 `path` 的绝对路径
+    将一个单独的 `bundle.js` 文件输出到 `/home/proj/public/assets` 目录中
+    
+    ```javascript
+    const config = {
+      output: {
+        filename: 'bundle.js',
+        path: '/home/proj/public/assets'
+      }
+    }
+    
+    module.exports = config;
+    ```
+    
+- 多个入口起点
+
+    如果配置创建了多个单独的“chunk”（例如，使用多个入口起点货使用像 CommonsChunkPlugin 这样的插件），则英噶使用占位符（substitutions） 来却表每个文件具有唯一的名称。
+
+    ```javascript
+    const config = {
+      entry: {
+        app:  './src/app.js',
+        search: './src/search.js'
+      },
+      output: {
+        filename: '[name].js',
+        path: __dirname + '/dist'
+      }
+    }
+    
+    module.exports = config;
+    ```
+    
+    这样就能输出对应的文件：`./dist/app.js`，`./dist/search.js`
+    
+- 进阶
+
+    因为在实际项目中并没有使用到 CDN，所以对这里的理解只能靠文档里的。暂时不做记录。
