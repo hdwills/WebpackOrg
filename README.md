@@ -2,14 +2,17 @@
 
 webpack 学习笔记，跟着官网的收藏学习一遍。记录其中的重点和有疑问的地方。
 
+- 文章中的代码片段都是针对 webpack.config.js
 - “古老”的标签 `<script>`，`<link>` 加载方式
 - 模块化按需请求，定量加载 CommonJS, AMD, CMD, UMD, ES6 模块
 - 静态分析，依赖关系，不同类型的代码交给不同的加载器进行处理
+
 
 ## 概念
 *webpack* 是一个现代 JavaScript 应用程序的*静态模块打包器(module bundler)*。当 webpack 处理应用程序时，它会递归地构建一个*依赖关系图(dependency graph)*，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 *bundle*。
 
 核心概念：
+
 - 入口 entry    
     指示 webpack 应该使用那个模块，来作为构建其内部*依赖图*的**开始**。进入入口起点后，webpack 会**找出**有哪些模块和库是入口起点（直接和间接）依赖的。每个依赖**随即**被处理，最后输出到称之为 *bundles* 的文件中。可指定一个或多个入口起点。
 
@@ -32,6 +35,7 @@ webpack 学习笔记，跟着官网的收藏学习一遍。记录其中的重点
       }
     }
     ```
+
 - loader    
     loader 让 webpack 能够去处理那些非 JavaScript 文件（webpack 自身只理解 JavaScript）。loader 可以将**所有类型**的文件转换为 webpack 能够处理的有效模块，然后再利用 webpack 去打包处理。
 
@@ -94,3 +98,55 @@ webpack 学习笔记，跟着官网的收藏学习一遍。记录其中的重点
 
     module.exports = config;
     ```
+    
+以上只是概念介绍，接下来将根据文档逐步展开。
+
+## 入口起点 Entry Points
+如何去配置 entry 属性
+
+- 单个入口（简写）语法
+
+```javascript
+const config = {
+  entry: './path/to/my/entry/file.js'
+};
+
+module.exports = config;
+```
+
+这里还支持传入数组，但是均会被当成主入口。**文档中引用解释的地方对我来说并不是很容易理解**。而且单个引入，在扩展上也不够灵活。
+
+- 对象语法
+
+```javascript
+const config = {
+  entry: {
+    app: './src/app.js',
+    vendors: './src/vendors.js'
+  }
+}
+```
+
+对象语法会比较繁琐。然而，这是应用程序中定义入口的最可扩展的方式。
+
+- 常见场景
+
+    - 分离应用程序 `app` 和第三方库 `vendor`
+    
+    入口，比如上面的对象语法。webpack 从 `app.js` 和 `verdors.js` 开始创建依赖图（dependency graph）。这些依赖图是彼此完全分离、相互独立的（每个 bundle 中都有一个 webpack 引导（bootstrap））。这种方式比较常见于，只有一个入口起点（不包括 vendor）的单页应用程序（single page application）中。
+    
+    这里面提到了**依赖图（dependency graph）**，**引导（bootstrap）**
+    
+    - 多页应用程序
+    
+    ```javascript
+    const config = {
+      entry: {
+        pageOne: './src/pageOne/index.js',
+        pageTwo: './src/pageTwo/index.js',
+        pageThree: './src/pageThree/index.js'
+      }
+    }
+    ```
+    
+    这部分代码中可以看到有 3 个独立分离的依赖图。详细的解释暂不做分析，只有实际使用过之后才能更好的理解。
