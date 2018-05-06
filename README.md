@@ -8,6 +8,10 @@ webpack 学习笔记，跟着官网的收藏学习一遍。记录其中的重点
 - 静态分析，依赖关系，不同类型的代码交给不同的加载器进行处理
 
 
+- 从 webpack 4.0.0 开始，可以不用引入一个配置文件。可以通过 `mode` 选项为 webpack 指定一些默认的配置。
+- webpack 4 里将命令行相关的都迁移到 `webpack-cli` 包，在单独执行打包命令时会提示是否安装此包
+
+
 ## 概念
 *webpack* 是一个现代 JavaScript 应用程序的*静态模块打包器(module bundler)*。当 webpack 处理应用程序时，它会递归地构建一个*依赖关系图(dependency graph)*，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 *bundle*。
 
@@ -151,7 +155,7 @@ const config = {
     
     这部分代码中可以看到有 3 个独立分离的依赖图。详细的解释暂不做分析，只有实际使用过之后才能更好的理解。
     
-### 输出
+## 输出 Output
 
 配置 `output` 选项可以控制 webpack 如何向硬盘写入编译文件。注意，即使可以存在多个**入口**起点，但是指指定一个**输出**配置。
 
@@ -197,3 +201,58 @@ const config = {
 - 进阶
 
     因为在实际项目中并没有使用到 CDN，所以对这里的理解只能靠文档里的。暂时不做记录。
+    
+## 模式 Mode
+`mode` 是 webpack 4 中新增加的参数选项，其中有两个可选值 `development` 和 `production`，二者必选一。将告知 webpack 使用相应模式的内置优化。
+
+```javascript
+module.exports = {
+  mode : 'production'
+}
+
+webpack --mode=production // cli
+```
+
+- production
+    - 默认提供所有可能的优化，如代码压缩、作用域提升等
+    - 不支持 `wacthing`
+    - `process.env.NODE_ENV` 的默认值是 `production`
+    
+    ```javascript
+    // webpack.production.config.js
+    // webpack 2/3
+    module.exports = {
+      plugins: [
+        new UglifyJsPlugin(/* ... */),
+        new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("production" )}),
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        new webpack.MoEmitOnErrorsPlugin()
+      ]
+    }
+    
+    // webpack 4
+    module.exports = {
+      mode: 'production'
+    }
+    ```
+    
+- development
+    - 主要优化了增量构建速度和开发体验
+    - `process.env.NODE_ENV` 的默认值是 `development`
+    - 开发模式下支持注释和提示，并且只是 `eval` 下的 `source maps`
+    
+    ```javascript
+    // webpack.development.config.js
+    // webpack 2/3
+    module.exports = {
+      plugins: [
+        new webpack.NamedModulesPlugin(),
+        new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("development") })
+      ]
+    }
+    
+    // webpack 4
+    module.exports = {
+      mode: 'development'
+    }
+    ```
