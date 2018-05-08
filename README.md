@@ -256,3 +256,62 @@ webpack --mode=production // cli
       mode: 'development'
     }
     ```
+    
+## loader
+loader 用于对模块的源代码进行转换。loader 可以使你在 `import` 或“加载”模块时预处理文件。因此，loader 类似于其他构建工具中“任务（task）”，并提供了处理前端构建步骤的强大方法。loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript，或将内联图像转换为 data URL。loader 甚至允许你直接在 JavaScript 模块中 `imorot` CSS 文件。
+
+- 示例    
+分别处理 CSS 文件和 TypeScript 文件，通过对应的 loader。
+
+```bash
+npm install --save-dev css-loader
+npm install --save-dev ts-loader
+```
+
+```javascript
+module.exports = {
+  module: {
+    rules: [
+      { test: /\.css$/, use: 'css-loader' },
+      { test: /\.ts$/, use: 'ts-loader' }
+    ]
+  }
+}
+```
+
+- 使用    
+    分别有如下的使用方式：
+    1. **配置**    
+        在 webpack.config.js 文件中指定 loader。    
+        module.rules 允许你在 webpack 配置中指定多个 loader。这是展示 loader 的一种简明方式，并且有助于使代码变得简洁。同时让你对各个 loader 有个全局概览：
+        
+        ```javascript
+        module.exports = {
+          module: {
+            rules: [
+              {
+                test: /\.css$/,
+                use: [
+                  { loader: 'style-loader' },
+                  {
+                    loader: 'css-loader',
+                    options: {
+                      modules: true
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+        ```
+        
+    2. **内联**    
+        在每个 `import` 语句中显式指定 loader。    
+        可以在 `import` 语句或任何等效于 import 的方式中指定 loader。使用 `!` 将资源中的 loader 分开。分开的每个部分都相对于当前目录解析。
+        
+        ```bash
+        import Styles from 'style-loader!css-loader?modules!./style.css';
+        ```
+        
+    3. CLI - 在 shell 命令中指定 loader
