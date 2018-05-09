@@ -1,4 +1,4 @@
-# WebpackDev
+# WebpackOrg
 
 webpack 学习笔记，跟着官网的收藏学习一遍。记录其中的重点和有疑问的地方。
 
