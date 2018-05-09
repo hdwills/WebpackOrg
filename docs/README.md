@@ -342,3 +342,30 @@ loader 通过 loader 预处理函数，为 JavaScript 生态系统提供了更�
 loader 遵循标准的模块解析。多数情况下，loader 将从模块路径（通常将模块路径认为是 `npm install`，`node_modules`）解析。
 
 loader 模块需要导出为一个函数，并且使用 Node.js 兼容的 JavaScript 编写。通常使用 npm 进行管理，但是也可以将自定义 loader 作为应用程序中的文件。按照约定，loader 通常被命名为 `xxx-loader`（例如 `json-loader`）。更多了解，可以看看如何编写 loader 等相关文章。
+
+## 插件 Plugins
+插件是 webpack 的支柱功能。webpack 自身也是构建于你在 webpack 配置中用到的相同的插件系统之上！
+
+插件的目的在于解决 loader 无法实现的其他事。
+
+### 剖析
+webpack 插件是一个具有 `apply` 属性的 JavaScript 对象。`apply` 属性会被 webpack compiler 调用，并且 compiler 对象可在整个编译生命周期访问。
+
+```javascript
+const pluginName = 'ConsoleLogOnBuildWebpackPlugin';
+
+class ConsoleLogOnBuildWebpackPlugin {
+  apply(compiler) {
+    compiler.hooks.run.tap(pluginName, compilation => {
+      console.log('webpack 构建过程开始！');
+    })
+  }
+}
+```
+
+compiler hook 的 tap 方法的第一个参数，应该是驼峰式命名的插件名称。建议为此使用一个常量，以便它可以在所有 hook 中复用。
+
+### 用法
+由于插件可携带参数/选项，你必须在 webpack 配置中，像 `plugins` 属性传入 `new` 实例。
+
+根据你的 webpack 用法，这里有多种方式使用插件。
