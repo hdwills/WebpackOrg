@@ -5,10 +5,6 @@ module.exports = {
   themeConfig: {
     nav: [
       { text: '概念', link: '/concepts/' }
-    ],
-    sidebar: [
-      '/',
-      '/concepts'
     ]
   }
 }
