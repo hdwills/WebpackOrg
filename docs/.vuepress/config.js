@@ -1,5 +1,14 @@
 module.exports = {
   title: 'WebpackOrg Notes',
   description: 'webpack.org example code',
-  port: '4321'
+  port: '4321',
+  themeConfig: {
+    nav: [
+      { text: '概念', link: '/concepts/' }
+    ],
+    sidebar: [
+      '/',
+      '/concepts'
+    ]
+  }
 }

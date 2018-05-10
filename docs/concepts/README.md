@@ -1,9 +1,11 @@
+---
+sidebar: auto
+---
+
 ## 概念
 *webpack* 是一个现代 JavaScript 应用程序的*静态模块打包器(module bundler)*。当 webpack 处理应用程序时，它会递归地构建一个*依赖关系图(dependency graph)*，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 *bundle*。
 
-### 核心概念：
-
-#### 入口 entry    
+### 入口 entry    
 指示 webpack 应该使用那个模块，来作为构建其内部*依赖图*的**开始**。进入入口起点后，webpack 会**找出**有哪些模块和库是入口起点（直接和间接）依赖的。每个依赖**随即**被处理，最后输出到称之为 *bundles* 的文件中。可指定一个或多个入口起点。
 
 ```javascript
@@ -12,7 +14,7 @@ module.exports = {
 }
 ```
 
-#### 输出 output    
+### 输出 output    
 在哪里输出它所创建的 bundles，以及命名等。
 
 ```javascript
@@ -27,7 +29,7 @@ module.exports = {
 }
 ```
 
-#### loader    
+### loader    
 loader 让 webpack 能够去处理那些非 JavaScript 文件（webpack 自身只理解 JavaScript）。loader 可以将**所有类型**的文件转换为 webpack 能够处理的有效模块，然后再利用 webpack 去打包处理。
 
 * `test` 用于标识出应该被对应的 loader 进行转换的某个或某些文件。
@@ -57,7 +59,7 @@ const config = {
 module.exports = config;
 ```
 
-#### 插件 plugins    
+### 插件 plugins    
 可以用于执行范围更广的任务（打包优化、压缩、**一直到重新定义环境中的变量**）
 
 `require()` 插件后，加入到 `plugins` 数组中，通过选项自定义。你也可以在一个配置文件中因为不同目的而多次使用同一个插件，这时需要通过使用 new 操作符来创建它的一个实例。
@@ -91,6 +93,17 @@ module.exports = config;
 ```
     
 以上只是概念介绍，接下来将根据文档逐步展开。
+
+### 模式 mode
+`mode` 是 webpack 4 中新增加的参数选项，其中有两个可选值 `development` 和 `production`，二者必选一。将告知 webpack 使用相应模式的内置优化。
+
+```javascript
+module.exports = {
+  mode : 'production'
+}
+
+webpack --mode=production // cli
+```
 
 ## 入口起点 Entry Points
 如何去配置 entry 属性
