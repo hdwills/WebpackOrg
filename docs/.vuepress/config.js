@@ -1,4 +1,5 @@
-module.export = {
-  title: 'WebpackOrg',
-  description: 'webpack.org example code'
+module.exports = {
+  title: 'WebpackOrg Notes',
+  description: 'webpack.org example code',
+  port: '4321'
 }

@@ -6,9 +6,7 @@
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack",
-    "server": "webpack-dev-server --open"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "webpack",
@@ -17,11 +15,6 @@
   "author": "hdwills",
   "license": "ISC",
   "devDependencies": {
-    "vuepress": "^0.8.4",
-    "webpack": "^3.5.3",
-    "webpack-dev-server": "^2.9.7"
-  },
-  "dependencies": {
-    "lodash": "^4.17.5"
+    "vuepress": "^0.8.4"
   }
 }
