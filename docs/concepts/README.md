@@ -367,3 +367,38 @@ compiler hook 的 tap 方法的第一个参数，应该是驼峰式命名的插�
 由于插件可携带参数/选项，你必须在 webpack 配置中，像 `plugins` 属性传入 `new` 实例。
 
 根据你的 webpack 用法，这里有多种方式使用插件。
+
+### 配置
+
+```javascript
+const HtmlWebpackPlugin = require('html-webpack-plugin'); // 通过 npm 安装
+const webpack = require('webpack'); // 访问内置的插件
+const path = require('path');
+
+const config = {
+  entry: './path/to/my/entry/file.js',
+  output: {
+    filename: 'my-first-webpack.bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js\jsx)$/,
+        use: 'babel-lader'
+      }
+    ]
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin(),
+    new HtmlWebpackPlugin({ template: './src/index.html' })
+  ]
+};
+
+module.exports = config;
+```
+
+### Node API
+> 即便使用 Node API，用户也应该在配置中传入 plugins 属性。compiler.apply 并不是推荐的使用方式。
+
+这里没有具体使用经验，暂不做记录。
