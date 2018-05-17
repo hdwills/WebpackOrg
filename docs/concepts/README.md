@@ -413,3 +413,23 @@ webpack 配置是标准的 Node.js CommonJS 模块，可以做到以下事情：
 - 对常用值使用常量或者变量
 - 编写并执行函数来生成部分配置
 
+应该避免以下做法：
+- 在使用 webpack 命令行接口（CLI），应该编写自己的命令行接口（CLI），或使用 `--env` 时，访问命令行接口（CLI）参数
+- 导出不确定的值（调用 webpack 两次应该产生同样的输出文件）
+- 编写很长的配置（应该将配置拆分为多个文件）
+
+webpack 配置对象如何即具有表现力，又具有可配置性，这是因为配置对象即是代码：
+
+### 基本配置
+```javascript
+const path = require('path);
+
+module.exports = {
+  mode: 'development',
+  entry: './foo.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'foo.bundle.js'
+  }
+}
+```
