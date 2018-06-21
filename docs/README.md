@@ -18,3 +18,9 @@ webpack 学习笔记，跟着官网的收藏学习一遍。记录其中的重点
 
 - 从 webpack 4 开始，可以不用引入一个配置文件。可以通过 `mode` 选项为 webpack 指定一些默认的配置。
 - webpack 4 里将命令行相关的都迁移到 `webpack-cli` 包，在单独执行打包命令时会提示是否安装此包
+
+---
+
+- 模块化规范？
+- require, exports - CommonJS 作为 Node.js 的规范
+- import, export - ES6
