@@ -4,7 +4,8 @@ module.exports = {
   port: '4321',
   themeConfig: {
     nav: [
-      { text: '概念', link: '/concepts/' }
+      { text: '概念', link: '/concepts/' },
+      { text: '笔记', link: '/notes/' }
     ]
   }
 }
